@@ -10,7 +10,14 @@ or other application using the libvirt API.
   <uuid>7422a41e-b0e5-434c-9e18-16feb9f9ea67</uuid>
   <memory unit='KiB'>16777216</memory>
   <currentMemory unit='KiB'>16777216</currentMemory>
+  <memoryBacking>
+    <hugepages/>
+  </memoryBacking>
   <vcpu placement='static'>8</vcpu>
+  <iothreads>1</iothreads>
+  <iothreadids>
+    <iothread id='1'/>
+  </iothreadids>
   <cputune>
     <vcpupin vcpu='0' cpuset='4'/>
     <vcpupin vcpu='1' cpuset='12'/>
@@ -20,11 +27,19 @@ or other application using the libvirt API.
     <vcpupin vcpu='5' cpuset='14'/>
     <vcpupin vcpu='6' cpuset='7'/>
     <vcpupin vcpu='7' cpuset='15'/>
+    <emulatorpin cpuset='3,11'/>
+    <iothreadpin iothread='1' cpuset='2,10'/>
   </cputune>
+  <sysinfo type='smbios'>
+    <system>
+      <entry name='product'>PC</entry>
+    </system>
+  </sysinfo>
   <os>
     <type arch='x86_64' machine='pc-i440fx-2.10'>hvm</type>
     <loader readonly='yes' type='pflash'>/usr/share/edk2/ovmf/OVMF_CODE.fd</loader>
     <nvram>/var/lib/libvirt/qemu/nvram/Windows10_VARS.fd</nvram>
+    <smbios mode='sysinfo'/>
   </os>
   <features>
     <acpi/>
