@@ -160,5 +160,6 @@ or other application using the libvirt API.
     <redirdev bus='usb' type='spicevmc'>
       <address type='usb' bus='0' port='3'/>
     </redirdev>
+   <memballoon model='none'/>
   </devices>
 </domain>
