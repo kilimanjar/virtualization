@@ -39,6 +39,7 @@ or other application using the libvirt API.
     <type arch='x86_64' machine='pc-i440fx-2.10'>hvm</type>
     <loader readonly='yes' type='pflash'>/usr/share/edk2/ovmf/OVMF_CODE.fd</loader>
     <nvram>/var/lib/libvirt/qemu/nvram/Windows10_VARS.fd</nvram>
+    <bootmenu enable='no'/>
     <smbios mode='sysinfo'/>
   </os>
   <features>
@@ -70,16 +71,18 @@ or other application using the libvirt API.
   <devices>
     <emulator>/usr/bin/qemu-kvm</emulator>
     <disk type='block' device='disk'>
-      <driver name='qemu' type='raw' cache='none' io='native'/>
+      <driver name='qemu' type='raw' cache='none' io='native' iothread='1'/>
       <source dev='/dev/sdc'/>
-      <target dev='sda' bus='sata'/>
+      <target dev='vdb' bus='virtio'/>
       <boot order='1'/>
-      <address type='drive' controller='0' bus='0' target='0' unit='0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x07' function='0x0'/>
     </disk>
     <disk type='file' device='cdrom'>
       <driver name='qemu' type='raw'/>
-      <target dev='hdb' bus='ide'/>
+      <source file='/home/tonda/Downloads/virtio-win-0.1.141.iso'/>
+      <target dev='sdb' bus='sata'/>
       <readonly/>
+      <boot order='2'/>
       <address type='drive' controller='0' bus='0' target='0' unit='1'/>
     </disk>
     <controller type='usb' index='0' model='ich9-ehci1'>
@@ -110,7 +113,7 @@ or other application using the libvirt API.
     <interface type='direct'>
       <mac address='52:54:00:8e:e3:bd'/>
       <source dev='enp3s0' mode='bridge'/>
-      <model type='rtl8139'/>
+      <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
     </interface>
     <serial type='pty'>
@@ -160,6 +163,6 @@ or other application using the libvirt API.
     <redirdev bus='usb' type='spicevmc'>
       <address type='usb' bus='0' port='3'/>
     </redirdev>
-   <memballoon model='none'/>
+    <memballoon model='none'/>
   </devices>
 </domain>
